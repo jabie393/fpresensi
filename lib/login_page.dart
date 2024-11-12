@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
       );
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Selamat datang!."),
+          content: Text("Selamat datangggg!."),
           duration: Duration(seconds: 2),
         ),
       );
