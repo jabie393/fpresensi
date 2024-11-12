@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "357064525829",
+    "project_id": "fpresensi",
+    "storage_bucket": "fpresensi.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357064525829:android:10fb95a54d4aee47ee346c",
+        "android_client_info": {
+          "package_name": "com.example.fpresensi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC03s7j4PBsQoLkysJevPdWiKyhZsretFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
