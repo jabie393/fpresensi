@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
           context: context,
           builder: (context) => AlertDialog(
             title: const Text(
-              'Konfirmasis',
+              'Konfirmasi',
               style: TextStyle(color: Colors.white),
             ),
             backgroundColor: Colors.blue[300],
