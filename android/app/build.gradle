@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.example.fpresensi"
-    compileSdk = flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

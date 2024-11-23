@@ -27,7 +27,10 @@ class _LoginPageState extends State<LoginPage> {
       // Jika berhasil login (UID tidak kosong atau null), navigasi ke HomePage dan tampilkan pesan berhasil
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
+        MaterialPageRoute(
+            builder: (context) => const HomePage(
+                  String: null,
+                )),
       );
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

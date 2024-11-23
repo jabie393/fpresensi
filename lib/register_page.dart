@@ -13,12 +13,15 @@ class _RegisterPageState extends State<RegisterPage> {
   final AuthService _authService = AuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _displayNameController =
+      TextEditingController(); // Controller untuk nama pengguna
   bool _isObscured = true;
 
   Future<void> _register() async {
     String? result = await _authService.register(
       _emailController.text.trim(),
       _passwordController.text.trim(),
+      _displayNameController.text.trim(), // Mengirimkan nama pengguna
     );
 
     if (result != null && result.isNotEmpty && result != 'null') {
@@ -73,6 +76,27 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 20),
                 const Center(child: Text("REGISTER")),
+                const SizedBox(height: 20),
+                const Text("Nama Pengguna"),
+                TextField(
+                  controller: _displayNameController,
+                  decoration: InputDecoration(
+                    hintText: 'Masukkan nama lengkap',
+                    prefixIcon: const Icon(Icons.person),
+                    filled: true,
+                    fillColor: Colors.blue[50],
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: Colors.grey, width: 1.0),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.blue.shade500, width: 2.0),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 20),
                 const Text("Email"),
                 TextField(
