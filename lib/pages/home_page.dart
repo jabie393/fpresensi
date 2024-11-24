@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:fpresensi/services/homepage_auth_service.dart';
 import 'package:fpresensi/services/location_service.dart';
 import 'package:fpresensi/widgets/attendance_history.dart';
-import 'package:fpresensi/setting_page.dart';
+import 'package:fpresensi/pages/setting_page.dart';
 import 'package:geolocator/geolocator.dart';
 
 class HomePage extends StatefulWidget {
