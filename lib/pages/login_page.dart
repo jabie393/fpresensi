@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fpresensi/home_page.dart';
-import 'package:fpresensi/register_page.dart';
-import 'package:fpresensi/auth_service.dart'; // Import AuthService
+import 'package:fpresensi/pages/home_page.dart';
+import 'package:fpresensi/pages/register_page.dart';
+import 'package:fpresensi/services/auth_service.dart'; // Import AuthService
+import 'package:fpresensi/widgets/custom_text_field.dart'; // Import widget untuk text field
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -22,19 +23,16 @@ class _LoginPageState extends State<LoginPage> {
       _emailController.text.trim(),
       _passwordController.text.trim(),
     );
-//
+
     if (result != null && result.isNotEmpty && result != 'null') {
       // Jika berhasil login (UID tidak kosong atau null), navigasi ke HomePage dan tampilkan pesan berhasil
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-            builder: (context) => const HomePage(
-                  String: null,
-                )),
+        MaterialPageRoute(builder: (context) => const HomePage()),
       );
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Selamat datang!."),
+          content: Text("Selamat datang!"),
           duration: Duration(seconds: 2),
         ),
       );
@@ -50,11 +48,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    // fungsi ketika tombol back ditekan maka akan keluar dari aplikasi
-    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
-        // Ubah perilaku navigasi kembali di sini
         bool backButtonResult = await showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -78,8 +73,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  // Navigasi keluar dari aplikasi
-                  SystemNavigator.pop(); // Menggunakan SystemNavigator
+                  SystemNavigator
+                      .pop(); // Menggunakan SystemNavigator untuk keluar
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
@@ -113,68 +108,37 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 20),
                   Center(
-                    child: Text("F PRESENSI",
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue[500],
-                        )),
+                    child: Text(
+                      "F PRESENSI",
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue[500],
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 20),
                   const Center(child: Text("LOGIN")),
                   const SizedBox(height: 20),
                   const Text("Email"),
-                  TextField(
+                  CustomTextField(
                     controller: _emailController,
-                    decoration: InputDecoration(
-                      hintText: 'Masukkan email anda',
-                      prefixIcon: const Icon(Icons.email),
-                      filled: true,
-                      fillColor: Colors.blue[50],
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: Colors.grey, width: 1.0),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.blue.shade500, width: 2.0),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                    ),
+                    hintText: 'Masukkan email anda',
+                    icon: Icons.email,
                     keyboardType: TextInputType.emailAddress,
                   ),
                   const SizedBox(height: 20),
                   const Text("Password"),
-                  TextField(
+                  CustomTextField(
                     controller: _passwordController,
+                    hintText: 'Masukkan password anda',
+                    icon: Icons.lock,
                     obscureText: _isObscured,
-                    decoration: InputDecoration(
-                      hintText: 'Masukkan password anda',
-                      prefixIcon: const Icon(Icons.lock),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _isObscured ? Icons.visibility : Icons.visibility_off,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _isObscured = !_isObscured;
-                          });
-                        },
-                      ),
-                      filled: true,
-                      fillColor: Colors.blue[50],
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: Colors.grey, width: 1.0),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.blue.shade500, width: 2.0),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                    ),
+                    onSuffixIconPressed: () {
+                      setState(() {
+                        _isObscured = !_isObscured;
+                      });
+                    },
                   ),
                   const SizedBox(height: 20),
                   Center(
@@ -197,10 +161,12 @@ class _LoginPageState extends State<LoginPage> {
                               builder: (context) => const RegisterPage()),
                         );
                       },
-                      child: Text("Belum punya akun? Register",
-                          style: TextStyle(
-                            color: Colors.green[800],
-                          )),
+                      child: Text(
+                        "Belum punya akun? Register",
+                        style: TextStyle(
+                          color: Colors.green[800],
+                        ),
+                      ),
                     ),
                   ),
                 ],

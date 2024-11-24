@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fpresensi/auth_service.dart';
-import 'package:fpresensi/login_page.dart';
+import 'package:fpresensi/services/auth_service.dart'; // Import AuthService
+import 'package:fpresensi/widgets/custom_text_field.dart'; // Import widget untuk text field
+import 'package:fpresensi/pages/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -10,7 +11,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final AuthService _authService = AuthService();
+  final AuthService _authService = AuthService(); // Instance AuthService
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _displayNameController =
@@ -78,78 +79,31 @@ class _RegisterPageState extends State<RegisterPage> {
                 const Center(child: Text("REGISTER")),
                 const SizedBox(height: 20),
                 const Text("Nama Pengguna"),
-                TextField(
+                CustomTextField(
                   controller: _displayNameController,
-                  decoration: InputDecoration(
-                    hintText: 'Masukkan nama lengkap',
-                    prefixIcon: const Icon(Icons.person),
-                    filled: true,
-                    fillColor: Colors.blue[50],
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: Colors.grey, width: 1.0),
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.blue.shade500, width: 2.0),
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                  ),
+                  hintText: 'Masukkan nama lengkap',
+                  icon: Icons.person,
                 ),
                 const SizedBox(height: 20),
                 const Text("Email"),
-                TextField(
+                CustomTextField(
                   controller: _emailController,
-                  decoration: InputDecoration(
-                    hintText: 'example@mail.com',
-                    prefixIcon: const Icon(Icons.email),
-                    filled: true,
-                    fillColor: Colors.blue[50],
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: Colors.grey, width: 1.0),
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.blue.shade500, width: 2.0),
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                  ),
+                  hintText: 'example@mail.com',
+                  icon: Icons.email,
                   keyboardType: TextInputType.emailAddress,
                 ),
                 const SizedBox(height: 20),
                 const Text("Password"),
-                TextField(
+                CustomTextField(
                   controller: _passwordController,
+                  hintText: 'Harus 6 karakter atau lebih',
+                  icon: Icons.lock,
                   obscureText: _isObscured,
-                  decoration: InputDecoration(
-                    hintText: 'Harus 6 karakter atau lebih',
-                    prefixIcon: const Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _isObscured ? Icons.visibility : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isObscured = !_isObscured;
-                        });
-                      },
-                    ),
-                    filled: true,
-                    fillColor: Colors.blue[50],
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: Colors.grey, width: 1.0),
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.blue.shade500, width: 2.0),
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                  ),
+                  onSuffixIconPressed: () {
+                    setState(() {
+                      _isObscured = !_isObscured;
+                    });
+                  },
                 ),
                 const SizedBox(height: 20),
                 Center(

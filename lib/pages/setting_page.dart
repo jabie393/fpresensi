@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fpresensi/pages/login_page.dart';
-import 'package:fpresensi/services/auth_service.dart';
+import 'package:fpresensi/services/auth_service.dart'; // Import AuthService
+import 'package:fpresensi/widgets/setting_button.dart'; // Import widget untuk tombol pengaturan
+import 'package:fpresensi/pages/login_page.dart'; // Import halaman login
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -11,17 +12,19 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  final AuthService authService = AuthService();
+  final AuthService authService = AuthService(); // Instance AuthService
 
   final List<String> buttonTitles = [
-    'Keluar',
-  ];
-  final List<IconData> buttonIcons = [
-    Icons.logout,
+    'Keluar', // Daftar tombol dengan judul
   ];
 
+  final List<IconData> buttonIcons = [
+    Icons.logout, // Ikon untuk tombol
+  ];
+
+  // Fungsi untuk konfirmasi logout
   Future<void> _confirmLogout() async {
-    // Menampilkan dialog konfirmasi
+    // Menampilkan dialog konfirmasi logout
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
@@ -42,9 +45,7 @@ class _SettingPageState extends State<SettingPage> {
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.red[800],
               ),
-              child: const Text(
-                "Tidak",
-              ),
+              child: const Text("Tidak"),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(true), // Ya
@@ -52,9 +53,7 @@ class _SettingPageState extends State<SettingPage> {
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.blue[600],
               ),
-              child: const Text(
-                "Ya",
-              ),
+              child: const Text("Ya"),
             ),
           ],
         );
@@ -63,11 +62,10 @@ class _SettingPageState extends State<SettingPage> {
 
     // Jika pengguna memilih "Ya", lakukan logout
     if (confirm == true) {
-      await authService.logout();
+      await authService.logout(); // Logout menggunakan AuthService
 
       // Navigasi ke halaman Login setelah logout
       Navigator.pushReplacement(
-        // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(builder: (context) => const LoginPage()),
       );
@@ -91,21 +89,14 @@ class _SettingPageState extends State<SettingPage> {
       ),
       backgroundColor: Colors.grey[300],
       body: ListView.builder(
-        itemCount: buttonTitles.length,
+        itemCount: buttonTitles.length, // Jumlah tombol
         itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton.icon(
+            child: SettingButton(
               onPressed: _confirmLogout, // Panggil fungsi konfirmasi logout
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.blue[500],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              icon: Icon(buttonIcons[index]),
-              label: Text(buttonTitles[index]),
+              icon: buttonIcons[index], // Ikon tombol
+              title: buttonTitles[index], // Judul tombol
             ),
           );
         },
