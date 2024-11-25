@@ -7,7 +7,7 @@ package="com.example.fpresensi">
         <uses-permission android:name="android.permission.USE_FINGERPRINT" />
         <uses-permission android:name="android.permission.CAMERA"/>
     <application
-        android:label="fpresensi"
+        android:label="F Presensi"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:enableOnBackInvokedCallback="true">

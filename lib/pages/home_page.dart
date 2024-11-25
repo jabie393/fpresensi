@@ -182,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
-                Expanded(
+                const Expanded(
                   child: AttendanceHistory(),
                 ),
               ],
