@@ -69,7 +69,8 @@ class AuthService {
       Map<String, dynamic> attendanceData = {
         'date': DateFormat('yyyy-MM-dd').format(now),
         'time': timestamp,
-        'location': 'Lat: ${position.latitude}, Lon: ${position.longitude}',
+        'latitude': position.latitude,
+        'longitude': position.longitude,
       };
 
       await attendanceRef.add(attendanceData);
