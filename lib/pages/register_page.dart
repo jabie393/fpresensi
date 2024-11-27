@@ -81,91 +81,103 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset:
+          true, // Menyesuaikan tampilan saat keyboard muncul
       backgroundColor: Colors.grey[300],
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Center(
-                  child: SizedBox(
-                    width: 80,
-                    height: 80,
-                    child: Image(
-                      image: AssetImage('assets/images/splash.png'),
+        child: Center(
+          // Memastikan konten di tengah layar
+          child: SingleChildScrollView(
+            // Membuat konten bisa di-scroll
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize:
+                    MainAxisSize.min, // Agar hanya menyesuaikan ukuran konten
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Center(
+                    child: SizedBox(
+                      width: 80,
+                      height: 80,
+                      child: Image(
+                        image: AssetImage('assets/images/splash.png'),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                Center(
-                  child: Text("F PRESENSI",
+                  const SizedBox(height: 20),
+                  Center(
+                    child: Text(
+                      "F PRESENSI",
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
                         color: Colors.blue[500],
-                      )),
-                ),
-                const SizedBox(height: 20),
-                const Center(child: Text("REGISTER")),
-                const SizedBox(height: 20),
-                const Text("Nama Pengguna"),
-                CustomTextField(
-                  controller: _displayNameController,
-                  hintText: 'Masukkan nama lengkap',
-                  icon: Icons.person,
-                ),
-                const SizedBox(height: 20),
-                const Text("Email"),
-                CustomTextField(
-                  controller: _emailController,
-                  hintText: 'example@mail.com',
-                  icon: Icons.email,
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                const SizedBox(height: 20),
-                const Text("Password"),
-                CustomTextField(
-                  controller: _passwordController,
-                  hintText: 'Harus 6 karakter atau lebih',
-                  icon: Icons.lock,
-                  obscureText: _isObscured,
-                  onSuffixIconPressed: () {
-                    setState(() {
-                      _isObscured = !_isObscured;
-                    });
-                  },
-                ),
-                const SizedBox(height: 20),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: _register,
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.blue[500],
+                      ),
                     ),
-                    child: const Text("Daftar"),
                   ),
-                ),
-                const SizedBox(height: 10),
-                Center(
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()),
-                      );
+                  const SizedBox(height: 20),
+                  const Center(child: Text("REGISTER")),
+                  const SizedBox(height: 20),
+                  const Text("Nama Pengguna"),
+                  CustomTextField(
+                    controller: _displayNameController,
+                    hintText: 'Masukkan nama lengkap',
+                    icon: Icons.person,
+                  ),
+                  const SizedBox(height: 20),
+                  const Text("Email"),
+                  CustomTextField(
+                    controller: _emailController,
+                    hintText: 'example@mail.com',
+                    icon: Icons.email,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  const SizedBox(height: 20),
+                  const Text("Password"),
+                  CustomTextField(
+                    controller: _passwordController,
+                    hintText: 'Harus 6 karakter atau lebih',
+                    icon: Icons.lock,
+                    obscureText: _isObscured,
+                    onSuffixIconPressed: () {
+                      setState(() {
+                        _isObscured = !_isObscured;
+                      });
                     },
-                    child: Text("Sudah punya akun? Login",
+                  ),
+                  const SizedBox(height: 20),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: _register,
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.blue[500],
+                      ),
+                      child: const Text("Daftar"),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Center(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Sudah punya akun? Login",
                         style: TextStyle(
                           color: Colors.green[800],
-                        )),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
