@@ -4,6 +4,7 @@ import 'package:fpresensi/pages/home_page.dart';
 import 'package:fpresensi/pages/register_page.dart';
 import 'package:fpresensi/services/auth_service.dart'; // Import AuthService
 import 'package:fpresensi/widgets/custom_text_field.dart'; // Import widget untuk text field
+import 'package:fpresensi/services/homepage_authservice.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,6 +14,20 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  String? displayName;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadDisplayName();
+  }
+
+  // Fungsi untuk memuat displayName
+  Future<void> _loadDisplayName() async {
+    displayName = await HomePageAuthService.getDisplayName();
+    setState(() {});
+  }
+
   final AuthService _authService = AuthService(); // Instance AuthService
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -25,23 +40,58 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     if (result != null && result.isNotEmpty && result != 'null') {
-      // Jika berhasil login (UID tidak kosong atau null), navigasi ke HomePage dan tampilkan pesan berhasil
+      // Memuat nama pengguna setelah login berhasil
+      await _loadDisplayName();
+
+      // Navigasi ke halaman HomePage
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
       );
+
+      // Menampilkan Snackbar dengan displayName
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Selamat datang!"),
-          duration: Duration(seconds: 2),
+        SnackBar(
+          content: Row(
+            children: [
+              const Icon(
+                Icons.check_circle,
+                color: Colors.white,
+              ),
+              const SizedBox(width: 10), // Spasi antara ikon dan teks
+              Expanded(
+                child: Text(
+                  "Selamat datang, ${displayName ?? 'User'}!",
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.blue[500] ?? Colors.blue,
+          duration: const Duration(seconds: 3),
         ),
       );
     } else {
-      // Menampilkan pesan kesalahan jika login gagal
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            content: Text(
-                'Login gagal. Silakan periksa email dan kata sandi Anda.')),
+          content: Row(
+            children: [
+              Icon(
+                Icons.error,
+                color: Colors.white,
+              ),
+              SizedBox(width: 10), // Spasi antara ikon dan teks
+              Expanded(
+                child: Text(
+                  "Login gagal. Silakan periksa email dan kata sandi Anda.",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 3),
+        ),
       );
     }
   }

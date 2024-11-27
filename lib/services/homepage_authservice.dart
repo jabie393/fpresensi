@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:geolocator/geolocator.dart';
 
-class AuthService {
+class HomePageAuthService {
   static final LocalAuthentication _auth = LocalAuthentication();
 
   // Fungsi untuk mendapatkan displayName

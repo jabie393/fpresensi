@@ -19,10 +19,25 @@ class AuthService {
     }
   }
 
-  // Fungsi Registrasi
+// Fungsi Registrasi
   Future<String?> register(
       String email, String password, String displayName) async {
     try {
+      // Pastikan displayName tidak kosong
+      if (displayName.isEmpty) {
+        return 'Nama pengguna tidak boleh kosong.';
+      }
+
+      // Pastikan email tidak kosong
+      if (email.isEmpty) {
+        return 'Email tidak boleh kosong.';
+      }
+
+      // Pastikan password tidak kosong
+      if (password.isEmpty) {
+        return 'Password tidak boleh kosong.';
+      }
+
       // Buat pengguna baru dengan email dan password
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
@@ -49,7 +64,7 @@ class AuthService {
       } else if (e.code == 'weak-password') {
         return 'Kata sandi terlalu lemah. Gunakan minimal 6 karakter.';
       } else {
-        return 'Harap isi Password & Email!';
+        return 'Terjadi kesalahan. Silakan coba lagi.';
       }
     } catch (e) {
       return 'Terjadi kesalahan. Silakan coba lagi.';

@@ -28,7 +28,25 @@ class _RegisterPageState extends State<RegisterPage> {
     if (result != null && result.isNotEmpty && result != 'null') {
       // Tampilkan pesan kesalahan jika registrasi gagal
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(result)),
+        SnackBar(
+          content: Row(
+            children: [
+              const Icon(
+                Icons.error,
+                color: Colors.white,
+              ),
+              const SizedBox(width: 10), // Spasi antara ikon dan teks
+              Expanded(
+                child: Text(
+                  result,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 3),
+        ),
       );
     } else {
       // Jika berhasil, arahkan pengguna ke halaman login dan tampilkan pesan berhasil
@@ -37,9 +55,24 @@ class _RegisterPageState extends State<RegisterPage> {
         MaterialPageRoute(builder: (context) => const LoginPage()),
       );
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Berhasil membuat akun, silahkan login."),
-          duration: Duration(seconds: 2),
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(
+                Icons.check_circle,
+                color: Colors.white,
+              ),
+              SizedBox(width: 10), // Spasi antara ikon dan teks
+              Expanded(
+                child: Text(
+                  "Berhasil membuat akun, silahkan login!",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.blue[500],
+          duration: const Duration(seconds: 3),
         ),
       );
     }

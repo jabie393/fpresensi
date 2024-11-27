@@ -72,9 +72,24 @@ class _SettingPageState extends State<SettingPage> {
 
       // Tampilkan Snackbar setelah logout berhasil
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Kamu berhasil Keluar!"),
-          duration: Duration(seconds: 2),
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(
+                Icons.check_circle,
+                color: Colors.white,
+              ),
+              SizedBox(width: 10), // Spasi antara ikon dan teks
+              Expanded(
+                child: Text(
+                  "Kamu berhasil keluar!",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.blue[500],
+          duration: const Duration(seconds: 3),
         ),
       );
     }

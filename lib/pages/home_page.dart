@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fpresensi/services/homepage_auth_service.dart';
+import 'package:fpresensi/services/homepage_authservice.dart';
 import 'package:fpresensi/services/location_service.dart';
 import 'package:fpresensi/widgets/attendance_history.dart';
 import 'package:fpresensi/pages/setting_page.dart';
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   // Fungsi untuk memuat displayName
   Future<void> _loadDisplayName() async {
-    displayName = await AuthService.getDisplayName();
+    displayName = await HomePageAuthService.getDisplayName();
     setState(() {});
   }
 
@@ -32,21 +32,22 @@ class _HomePageState extends State<HomePage> {
   Future<void> _handleAttendance() async {
     try {
       // Validasi biometrik dan lokasi
-      bool isAuthenticated = await AuthService.authenticateWithBiometrics();
+      bool isAuthenticated =
+          await HomePageAuthService.authenticateWithBiometrics();
       if (!isAuthenticated) {
-        _showMessage('Autentikasi biometrik gagal');
+        _showMessage('Autentikasi biometrik gagal', isError: true);
         return;
       }
 
       // Validasi lokasi
       Position position = await LocationService.getCurrentLocation();
       if (!LocationService.isInOfficeArea(position)) {
-        _showMessage('Kamu berada di luar area lokasi kantor');
+        _showMessage('Kamu berada di luar area lokasi kantor', isError: true);
         return;
       }
 
       // Simpan presensi ke Firebase
-      await AuthService.saveAttendance(position);
+      await HomePageAuthService.saveAttendance(position);
 
       // Tampilkan notifikasi berhasil
       _showMessage('Presensi berhasil disimpan!');
