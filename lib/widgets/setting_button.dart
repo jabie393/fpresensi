@@ -14,17 +14,42 @@ class SettingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      onPressed: onPressed, // Panggil fungsi onPressed
+    return ElevatedButton(
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.white,
         backgroundColor: Colors.blue[500],
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
       ),
-      icon: Icon(icon), // Ikon tombol
-      label: Text(title), // Judul tombol
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // Ikon dan teks di sebelah kiri
+          Row(
+            children: [
+              Icon(
+                icon,
+                color: Colors.white,
+              ),
+              const SizedBox(width: 10), // Spasi antara ikon dan teks
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+          const Icon(
+            Icons.chevron_right,
+            color: Colors.white,
+          ),
+        ],
+      ),
     );
   }
 }

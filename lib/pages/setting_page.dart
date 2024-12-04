@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fpresensi/services/auth_service.dart'; // Import AuthService
-import 'package:fpresensi/widgets/setting_button.dart'; // Import widget untuk tombol pengaturan
-import 'package:fpresensi/pages/login_page.dart'; // Import halaman login
+import 'package:fpresensi/services/auth_service.dart';
+import 'package:fpresensi/widgets/setting_button.dart';
+import 'package:fpresensi/pages/login_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -15,11 +16,13 @@ class _SettingPageState extends State<SettingPage> {
   final AuthService authService = AuthService(); // Instance AuthService
 
   final List<String> buttonTitles = [
-    'Keluar', // Daftar tombol dengan judul
+    'Keluar',
+    'Kontak Admin',
   ];
 
   final List<IconData> buttonIcons = [
-    Icons.logout, // Ikon untuk tombol
+    Icons.logout,
+    Icons.contact_support_outlined,
   ];
 
   // Fungsi untuk konfirmasi logout
@@ -95,6 +98,36 @@ class _SettingPageState extends State<SettingPage> {
     }
   }
 
+  // Fungsi untuk Kontak admin
+  Future<void> _contactAdmin() async {
+    const String adminPhone = '6285812007371';
+    final Uri whatsappBusinessIntent = Uri.parse(
+        "intent://send?phone=$adminPhone&text=Halo%20Admin#Intent;scheme=whatsapp;package=com.whatsapp.w4b;end");
+
+    // Periksa apakah intent WhatsApp business dapat diluncurkan
+    if (await canLaunchUrl(whatsappBusinessIntent)) {
+      await launchUrl(whatsappBusinessIntent,
+          mode: LaunchMode.externalApplication);
+    } else {
+      // Fallback untuk WhatsApp biasa
+      final Uri whatsappUrl =
+          Uri.parse("https://wa.me/$adminPhone?text=Halo%20Admin");
+      if (await canLaunchUrl(whatsappUrl)) {
+        await launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
+      } else {
+        // Jika kedua pendekatan gagal, tampilkan pesan error
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Gagal membuka WhatsApp atau WhatsApp Business'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  // Fungsi lain
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,7 +142,13 @@ class _SettingPageState extends State<SettingPage> {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: SettingButton(
-              onPressed: _confirmLogout, // Panggil fungsi konfirmasi logout
+              onPressed: () {
+                if (buttonTitles[index] == 'Keluar') {
+                  _confirmLogout(); // Panggil fungsi konfirmasi logout
+                } else if (buttonTitles[index] == 'Kontak Admin') {
+                  _contactAdmin(); // Panggil fungsi kontak admin
+                }
+              },
               icon: buttonIcons[index], // Ikon tombol
               title: buttonTitles[index], // Judul tombol
             ),
