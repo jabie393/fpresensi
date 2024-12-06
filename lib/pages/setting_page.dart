@@ -140,7 +140,7 @@ class _SettingPageState extends State<SettingPage> {
         itemCount: buttonTitles.length, // Jumlah tombol
         itemBuilder: (BuildContext context, int index) {
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(0),
             child: SettingButton(
               onPressed: () {
                 if (buttonTitles[index] == 'Keluar') {
