@@ -40,6 +40,7 @@ class AttendanceHistory extends StatelessWidget {
             final formattedTime = DateFormat('HH:mm').format(time);
 
             return Card(
+              color: Colors.white,
               child: Padding(
                 padding: const EdgeInsets.all(
                     8.0), // Memberikan padding di sekitar Card

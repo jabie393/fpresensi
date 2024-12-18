@@ -98,22 +98,22 @@ class _SettingPageState extends State<SettingPage> {
     }
   }
 
-  // Fungsi untuk Kontak admin
+  // admin Kontak untuk Fungsi
   Future<void> _contactAdmin() async {
     const String adminPhone = '6285812007371';
-    final Uri whatsappBusinessIntent = Uri.parse(
-        "intent://send?phone=$adminPhone&text=Halo%20Admin#Intent;scheme=whatsapp;package=com.whatsapp.w4b;end");
+    final Uri whatsappUrl =
+        Uri.parse("https://wa.me/$adminPhone?text=Halo%20Admin");
 
-    // Periksa apakah intent WhatsApp business dapat diluncurkan
-    if (await canLaunchUrl(whatsappBusinessIntent)) {
-      await launchUrl(whatsappBusinessIntent,
-          mode: LaunchMode.externalApplication);
+    // Periksa apakah intent WhatsApp biasa dapat diluncurkan
+    if (await canLaunchUrl(whatsappUrl)) {
+      await launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
     } else {
-      // Fallback untuk WhatsApp biasa
-      final Uri whatsappUrl =
-          Uri.parse("https://wa.me/$adminPhone?text=Halo%20Admin");
-      if (await canLaunchUrl(whatsappUrl)) {
-        await launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
+      // Fallback untuk WhatsApp Business
+      final Uri whatsappBusinessIntent = Uri.parse(
+          "intent://send?phone=$adminPhone&text=Halo%20Admin#Intent;scheme=whatsapp;package=com.whatsapp.w4b;end");
+      if (await canLaunchUrl(whatsappBusinessIntent)) {
+        await launchUrl(whatsappBusinessIntent,
+            mode: LaunchMode.externalApplication);
       } else {
         // Jika kedua pendekatan gagal, tampilkan pesan error
         ScaffoldMessenger.of(context).showSnackBar(
@@ -132,28 +132,41 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pengaturan'),
-        backgroundColor: Colors.grey[300],
+        title: const Text(
+          'Pengaturan',
+          style: TextStyle(
+              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.blue[500],
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       backgroundColor: Colors.grey[300],
-      body: ListView.builder(
-        itemCount: buttonTitles.length, // Jumlah tombol
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.all(0),
-            child: SettingButton(
-              onPressed: () {
-                if (buttonTitles[index] == 'Keluar') {
-                  _confirmLogout(); // Panggil fungsi konfirmasi logout
-                } else if (buttonTitles[index] == 'Kontak Admin') {
-                  _contactAdmin(); // Panggil fungsi kontak admin
-                }
-              },
-              icon: buttonIcons[index], // Ikon tombol
-              title: buttonTitles[index], // Judul tombol
-            ),
-          );
-        },
+      body: Container(
+        decoration: BoxDecoration(
+          borderRadius:
+              const BorderRadius.only(bottomRight: Radius.circular(30)),
+          color: Colors.blue[500],
+        ),
+        margin: const EdgeInsets.only(bottom: 645),
+        child: ListView.builder(
+          itemCount: buttonTitles.length, // Jumlah tombol
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.all(0),
+              child: SettingButton(
+                onPressed: () {
+                  if (buttonTitles[index] == 'Keluar') {
+                    _confirmLogout(); // Panggil fungsi konfirmasi logout
+                  } else if (buttonTitles[index] == 'Kontak Admin') {
+                    _contactAdmin(); // Panggil fungsi kontak admin
+                  }
+                },
+                icon: buttonIcons[index], // Ikon tombol
+                title: buttonTitles[index], // Judul tombol
+              ),
+            );
+          },
+        ),
       ),
     );
   }

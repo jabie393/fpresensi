@@ -17,6 +17,7 @@ class SettingButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
+        elevation: 0, // remove shadow
         backgroundColor: Colors.blue[500],
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
         shape: RoundedRectangleBorder(

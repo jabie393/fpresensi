@@ -150,7 +150,8 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   IconButton(
-                    icon: const Icon(Icons.settings, color: Colors.black),
+                    icon: const Icon(Icons.settings,
+                        color: Color.fromARGB(255, 90, 90, 90)),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const SettingPage(),
@@ -164,35 +165,60 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  displayName ?? "Memuat nama pengguna...",
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+        body: Container(
+          margin: const EdgeInsets.only(top: 10.0), // Tambahkan jarak ke atas
+          decoration: BoxDecoration(
+            color: Colors.blue[500], // Warna latar belakang
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(30), // Lengkungan sudut kiri atas
+            ),
+          ),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Riwayat Presensi :",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
                   ),
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  "Riwayat Presensi :",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 10),
-                const Expanded(
-                  child: AttendanceHistory(),
-                ),
-              ],
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                          top: 10), // Tambahkan jarak atas (opsional)
+                      padding:
+                          const EdgeInsets.all(12.0), // Padding dalam kotak
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300], // Warna latar belakang kotak
+                        borderRadius:
+                            BorderRadius.circular(12), // Lengkungan sudut kotak
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black26, // Warna bayangan
+                            blurRadius: 4, // Besarnya blur bayangan
+                            offset: Offset(0, 2), // Posisi bayangan
+                          ),
+                        ],
+                      ),
+                      child:
+                          const AttendanceHistory(), // Widget Riwayat Presensi
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: _handleAttendance,
-          backgroundColor: Colors.grey[50],
+          backgroundColor: Colors.grey[300],
           child: const Icon(
             Icons.fingerprint,
             color: Colors.black,
