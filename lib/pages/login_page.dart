@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                       width: 80,
                       height: 80,
                       child: Image(
-                        image: AssetImage('assets/images/splash.png'),
+                        image: AssetImage('assets/images/fpresensilogo.png'),
                       ),
                     ),
                   ),

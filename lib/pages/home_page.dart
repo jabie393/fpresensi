@@ -135,8 +135,8 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.only(
                             left: 16.0), // Tambahkan jarak di kiri
-                        child:
-                            Image.asset('assets/images/splash.png', height: 35),
+                        child: Image.asset('assets/images/fpresensilogo.png',
+                            height: 35),
                       ),
                       const SizedBox(width: 10), // Jarak antara gambar dan teks
                       Text(
