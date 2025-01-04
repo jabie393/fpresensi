@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fpresensi/services/homepage_authservice.dart';
 import 'package:fpresensi/services/location_service.dart';
+import 'package:fpresensi/services/notification_service.dart';
 import 'package:fpresensi/widgets/attendance_history.dart';
 import 'package:fpresensi/pages/setting_page.dart';
 import 'package:geolocator/geolocator.dart';
@@ -20,6 +21,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _loadDisplayName();
+    // Mendengarkan notifikasi saat aplikasi aktif
+    NotificationService().listenForMessages();
   }
 
   // Fungsi untuk memuat displayName

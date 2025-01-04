@@ -1,8 +1,10 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpresensi/pages/login_page.dart';
 import 'package:fpresensi/pages/home_page.dart';
+import 'package:fpresensi/services/notification_service.dart';
 import 'package:fpresensi/firebase_options.dart';
 
 void main() async {
@@ -12,6 +14,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // Inisialisasi layanan notifikasi
+  await NotificationService().initNotifications();
+
+  // Menangani notifikasi ketika aplikasi berada di background
+  FirebaseMessaging.onBackgroundMessage(
+      NotificationService.backgroundMessageHandler);
 
   // Atur login berkelanjutan (Persistence.LOCAL)
   try {
