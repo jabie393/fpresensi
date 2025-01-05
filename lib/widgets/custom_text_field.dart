@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
   final IconData icon;
@@ -19,21 +19,42 @@ class CustomTextField extends StatelessWidget {
   });
 
   @override
+  _CustomTextFieldState createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
+  late FocusNode _focusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDarkMode = theme.brightness == Brightness.dark;
 
     return TextField(
-      controller: controller,
-      obscureText: obscureText,
+      controller: widget.controller,
+      obscureText: widget.obscureText,
+      focusNode: _focusNode,
       decoration: InputDecoration(
-        hintText: hintText,
-        prefixIcon: Icon(icon),
-        suffixIcon: onSuffixIconPressed != null
+        hintText: widget.hintText,
+        prefixIcon: Icon(widget.icon),
+        suffixIcon: widget.onSuffixIconPressed != null
             ? IconButton(
-                icon:
-                    Icon(obscureText ? Icons.visibility : Icons.visibility_off),
-                onPressed: onSuffixIconPressed,
+                icon: Icon(widget.obscureText
+                    ? Icons.visibility
+                    : Icons.visibility_off),
+                onPressed: widget.onSuffixIconPressed,
               )
             : null,
         filled: true,
@@ -47,13 +68,13 @@ class CustomTextField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: theme.primaryColor,
+            color: _focusNode.hasFocus ? Colors.blue[600]! : Colors.blue[600]!, // Mengubah warna outline menjadi biru saat fokus
             width: 2.0,
           ),
           borderRadius: BorderRadius.circular(12.0),
         ),
       ),
-      keyboardType: keyboardType,
+      keyboardType: widget.keyboardType,
     );
   }
 }
