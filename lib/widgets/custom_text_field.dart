@@ -68,7 +68,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: _focusNode.hasFocus ? Colors.blue[600]! : Colors.blue[600]!, // Mengubah warna outline menjadi biru saat fokus
+            color: _focusNode.hasFocus
+                ? Colors.blue[400]!
+                : Colors.blue[
+                    400]!, // Mengubah warna outline menjadi biru saat fokus
             width: 2.0,
           ),
           borderRadius: BorderRadius.circular(12.0),

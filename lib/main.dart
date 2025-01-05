@@ -48,10 +48,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         brightness: Brightness.light, // Tema default (terang)
+        textSelectionTheme: TextSelectionThemeData(
+          selectionColor: Colors.black.withOpacity(0.3), // Warna latar belakang
+          selectionHandleColor: Colors.black, // Warna handle seleksi
+          cursorColor: Colors.black, // Warna kursor
+        ),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark, // Tema gelap
         primarySwatch: Colors.blueGrey,
+        textSelectionTheme: TextSelectionThemeData(
+          selectionColor: Colors.blue.withOpacity(0.3), // Warna latar belakang
+          selectionHandleColor: Colors.blue, // Warna handle seleksi
+          cursorColor: Colors.blue, // Warna kursor
+        ),
       ),
       themeMode: ThemeMode.system, // Menyesuaikan dengan tema sistem
       home: isLoggedIn
@@ -60,4 +70,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
- 

@@ -27,7 +27,8 @@ class _SettingPageState extends State<SettingPage> {
 
   // Fungsi untuk konfirmasi logout
   Future<void> _confirmLogout() async {
-    bool isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    bool isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     final bool? confirm = await showDialog<bool>(
       context: context,
@@ -90,7 +91,8 @@ class _SettingPageState extends State<SettingPage> {
   // Fungsi untuk menghubungi admin
   Future<void> _contactAdmin() async {
     const String adminPhone = '6285812007371';
-    final Uri whatsappUrl = Uri.parse("https://wa.me/$adminPhone?text=Halo%20Admin");
+    final Uri whatsappUrl =
+        Uri.parse("https://wa.me/$adminPhone?text=Halo%20Admin");
 
     if (await canLaunchUrl(whatsappUrl)) {
       await launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
@@ -98,7 +100,8 @@ class _SettingPageState extends State<SettingPage> {
       final Uri whatsappBusinessIntent = Uri.parse(
           "intent://send?phone=$adminPhone&text=Halo%20Admin#Intent;scheme=whatsapp;package=com.whatsapp.w4b;end");
       if (await canLaunchUrl(whatsappBusinessIntent)) {
-        await launchUrl(whatsappBusinessIntent, mode: LaunchMode.externalApplication);
+        await launchUrl(whatsappBusinessIntent,
+            mode: LaunchMode.externalApplication);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -112,13 +115,18 @@ class _SettingPageState extends State<SettingPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    bool isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Pengaturan',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: isDarkMode ? Colors.white : Colors.white,
+          ),
         ),
         backgroundColor: isDarkMode ? Colors.grey[850] : Colors.blue[500],
         iconTheme: const IconThemeData(color: Colors.white),
@@ -126,24 +134,56 @@ class _SettingPageState extends State<SettingPage> {
       backgroundColor: isDarkMode ? Colors.grey[900] : Colors.grey[300],
       body: Container(
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(bottomRight: Radius.circular(30)),
-          color: isDarkMode ? Colors.grey[800] : Colors.blue[100],
+          color: isDarkMode ? Colors.grey[900] : Colors.grey[300],
         ),
         child: ListView.builder(
-          itemCount: buttonTitles.length,
+          itemCount: (buttonTitles.length / 2).ceil(),
           itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.all(0),
-              child: SettingButton(
-                onPressed: () {
-                  if (buttonTitles[index] == 'Keluar') {
-                    _confirmLogout();
-                  } else if (buttonTitles[index] == 'Kontak Admin') {
-                    _contactAdmin();
-                  }
-                },
-                icon: buttonIcons[index],
-                title: buttonTitles[index],
+            final firstButtonIndex = index * 2;
+            final secondButtonIndex = firstButtonIndex + 1;
+
+            return ClipRRect(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: isDarkMode ? Colors.grey[850] : Colors.blue[500],
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 4,
+                      offset: Offset(2, 2),
+                    ),
+                  ],
+                ),
+                margin: const EdgeInsets.all(0),
+                child: Column(
+                  children: [
+                    SettingButton(
+                      onPressed: () {
+                        if (buttonTitles[firstButtonIndex] == 'Keluar') {
+                          _confirmLogout();
+                        } else if (buttonTitles[firstButtonIndex] ==
+                            'Kontak Admin') {
+                          _contactAdmin();
+                        }
+                      },
+                      icon: buttonIcons[firstButtonIndex],
+                      title: buttonTitles[firstButtonIndex],
+                    ),
+                    if (secondButtonIndex < buttonTitles.length)
+                      SettingButton(
+                        onPressed: () {
+                          if (buttonTitles[secondButtonIndex] == 'Keluar') {
+                            _confirmLogout();
+                          } else if (buttonTitles[secondButtonIndex] ==
+                              'Kontak Admin') {
+                            _contactAdmin();
+                          }
+                        },
+                        icon: buttonIcons[secondButtonIndex],
+                        title: buttonTitles[secondButtonIndex],
+                      ),
+                  ],
+                ),
               ),
             );
           },
