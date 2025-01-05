@@ -20,6 +20,9 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+
     return TextField(
       controller: controller,
       obscureText: obscureText,
@@ -34,13 +37,19 @@ class CustomTextField extends StatelessWidget {
               )
             : null,
         filled: true,
-        fillColor: Colors.blue[50],
+        fillColor: isDarkMode ? theme.cardColor : Colors.grey[200],
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+          borderSide: BorderSide(
+            color: isDarkMode ? Colors.grey[600]! : Colors.grey[400]!,
+            width: 1.0,
+          ),
           borderRadius: BorderRadius.circular(12.0),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.blue.shade500, width: 2.0),
+          borderSide: BorderSide(
+            color: theme.primaryColor,
+            width: 2.0,
+          ),
           borderRadius: BorderRadius.circular(12.0),
         ),
       ),

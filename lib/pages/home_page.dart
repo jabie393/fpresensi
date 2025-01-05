@@ -83,6 +83,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Deteksi tema (light mode atau dark mode)
+    bool isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return WillPopScope(
       onWillPop: () async {
         // Ubah perilaku navigasi kembali di sini
@@ -124,11 +128,11 @@ class _HomePageState extends State<HomePage> {
         return backButtonResult;
       },
       child: Scaffold(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: isDarkMode ? Colors.grey[900] : Colors.grey[300],
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: Container(
-            color: Colors.grey[300],
+            color: isDarkMode ? Colors.grey[850] : Colors.grey[300],
             child: SafeArea(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -169,11 +173,11 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         body: Container(
-          margin: const EdgeInsets.only(top: 10.0), // Tambahkan jarak ke atas
+          margin: const EdgeInsets.only(top: 10.0),
           decoration: BoxDecoration(
-            color: Colors.blue[500], // Warna latar belakang
+            color: isDarkMode ? Colors.grey[850] : Colors.blue[500],
             borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(30), // Lengkungan sudut kiri atas
+              topLeft: Radius.circular(30),
             ),
           ),
           child: SafeArea(
@@ -194,24 +198,20 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Expanded(
                     child: Container(
-                      margin: const EdgeInsets.only(
-                          top: 10), // Tambahkan jarak atas (opsional)
-                      padding:
-                          const EdgeInsets.all(12.0), // Padding dalam kotak
+                      margin: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.all(12.0),
                       decoration: BoxDecoration(
-                        color: Colors.grey[300], // Warna latar belakang kotak
-                        borderRadius:
-                            BorderRadius.circular(12), // Lengkungan sudut kotak
+                        color: isDarkMode ? Colors.grey[800] : Colors.grey[300],
+                        borderRadius: BorderRadius.circular(12),
                         boxShadow: const [
                           BoxShadow(
-                            color: Colors.black26, // Warna bayangan
-                            blurRadius: 4, // Besarnya blur bayangan
-                            offset: Offset(0, 2), // Posisi bayangan
+                            color: Colors.black26,
+                            blurRadius: 4,
+                            offset: Offset(0, 2),
                           ),
                         ],
                       ),
-                      child:
-                          const AttendanceHistory(), // Widget Riwayat Presensi
+                      child: const AttendanceHistory(),
                     ),
                   ),
                 ],
@@ -221,7 +221,7 @@ class _HomePageState extends State<HomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: _handleAttendance,
-          backgroundColor: Colors.grey[300],
+          backgroundColor: isDarkMode ? Colors.grey[800] : Colors.grey[300],
           child: const Icon(
             Icons.fingerprint,
             color: Colors.black,

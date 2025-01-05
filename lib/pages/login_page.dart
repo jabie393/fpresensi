@@ -98,6 +98,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Cek apakah dark mode aktif
+    bool isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return WillPopScope(
       onWillPop: () async {
         bool backButtonResult = await showDialog(
@@ -138,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
         return backButtonResult;
       },
       child: Scaffold(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: isDarkMode ? Colors.grey[900] : Colors.grey[300],
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(8.0),

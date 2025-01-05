@@ -80,10 +80,13 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Cek apakah dark mode aktif
+    bool isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Scaffold(
       resizeToAvoidBottomInset:
           true, // Menyesuaikan tampilan saat keyboard muncul
-      backgroundColor: Colors.grey[300],
+      backgroundColor: isDarkMode ? Colors.grey[900] : Colors.grey[300],
       body: SafeArea(
         child: Center(
           // Memastikan konten di tengah layar

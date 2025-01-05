@@ -45,9 +45,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        brightness: Brightness.light, // Tema default (terang)
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark, // Tema gelap
+        primarySwatch: Colors.blueGrey,
+      ),
+      themeMode: ThemeMode.system, // Menyesuaikan dengan tema sistem
       home: isLoggedIn
           ? const HomePage() // Halaman Home jika sudah login
           : const LoginPage(), // Halaman Login jika belum login
     );
   }
 }
+ 

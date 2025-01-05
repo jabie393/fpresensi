@@ -27,20 +27,15 @@ class _SettingPageState extends State<SettingPage> {
 
   // Fungsi untuk konfirmasi logout
   Future<void> _confirmLogout() async {
-    // Menampilkan dialog konfirmasi logout
+    bool isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     final bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text(
-            "Konfirmasi Logout",
-            style: TextStyle(color: Colors.white),
-          ),
-          content: const Text(
-            "Apakah kamu yakin ingin keluar?",
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.blue[300],
+          title: const Text("Konfirmasi Logout"),
+          content: const Text("Apakah kamu yakin ingin keluar?"),
+          backgroundColor: isDarkMode ? Colors.grey[800] : Colors.blue[300],
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false), // Batal
@@ -63,26 +58,20 @@ class _SettingPageState extends State<SettingPage> {
       },
     );
 
-    // Jika pengguna memilih "Ya", lakukan logout
     if (confirm == true) {
       await authService.logout(); // Logout menggunakan AuthService
 
-      // Navigasi ke halaman Login setelah logout
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LoginPage()),
       );
 
-      // Tampilkan Snackbar setelah logout berhasil
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Row(
             children: [
-              Icon(
-                Icons.check_circle,
-                color: Colors.white,
-              ),
-              SizedBox(width: 10), // Spasi antara ikon dan teks
+              Icon(Icons.check_circle, color: Colors.white),
+              SizedBox(width: 10),
               Expanded(
                 child: Text(
                   "Kamu berhasil keluar!",
@@ -98,24 +87,19 @@ class _SettingPageState extends State<SettingPage> {
     }
   }
 
-  // admin Kontak untuk Fungsi
+  // Fungsi untuk menghubungi admin
   Future<void> _contactAdmin() async {
     const String adminPhone = '6285812007371';
-    final Uri whatsappUrl =
-        Uri.parse("https://wa.me/$adminPhone?text=Halo%20Admin");
+    final Uri whatsappUrl = Uri.parse("https://wa.me/$adminPhone?text=Halo%20Admin");
 
-    // Periksa apakah intent WhatsApp biasa dapat diluncurkan
     if (await canLaunchUrl(whatsappUrl)) {
       await launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
     } else {
-      // Fallback untuk WhatsApp Business
       final Uri whatsappBusinessIntent = Uri.parse(
           "intent://send?phone=$adminPhone&text=Halo%20Admin#Intent;scheme=whatsapp;package=com.whatsapp.w4b;end");
       if (await canLaunchUrl(whatsappBusinessIntent)) {
-        await launchUrl(whatsappBusinessIntent,
-            mode: LaunchMode.externalApplication);
+        await launchUrl(whatsappBusinessIntent, mode: LaunchMode.externalApplication);
       } else {
-        // Jika kedua pendekatan gagal, tampilkan pesan error
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Gagal membuka WhatsApp atau WhatsApp Business'),
@@ -126,43 +110,40 @@ class _SettingPageState extends State<SettingPage> {
     }
   }
 
-  // Fungsi lain
-
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           'Pengaturan',
-          style: TextStyle(
-              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.blue[500],
+        backgroundColor: isDarkMode ? Colors.grey[850] : Colors.blue[500],
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      backgroundColor: Colors.grey[300],
+      backgroundColor: isDarkMode ? Colors.grey[900] : Colors.grey[300],
       body: Container(
         decoration: BoxDecoration(
-          borderRadius:
-              const BorderRadius.only(bottomRight: Radius.circular(30)),
-          color: Colors.blue[500],
+          borderRadius: const BorderRadius.only(bottomRight: Radius.circular(30)),
+          color: isDarkMode ? Colors.grey[800] : Colors.blue[100],
         ),
-        margin: const EdgeInsets.only(bottom: 645),
         child: ListView.builder(
-          itemCount: buttonTitles.length, // Jumlah tombol
+          itemCount: buttonTitles.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: const EdgeInsets.all(0),
               child: SettingButton(
                 onPressed: () {
                   if (buttonTitles[index] == 'Keluar') {
-                    _confirmLogout(); // Panggil fungsi konfirmasi logout
+                    _confirmLogout();
                   } else if (buttonTitles[index] == 'Kontak Admin') {
-                    _contactAdmin(); // Panggil fungsi kontak admin
+                    _contactAdmin();
                   }
                 },
-                icon: buttonIcons[index], // Ikon tombol
-                title: buttonTitles[index], // Judul tombol
+                icon: buttonIcons[index],
+                title: buttonTitles[index],
               ),
             );
           },
